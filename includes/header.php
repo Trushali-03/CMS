@@ -5,7 +5,6 @@
               <?php
 $query=mysqli_query($con,"select * from tblpage where PageType='contactus'");
 while ($row=mysqli_fetch_array($query)) {
-
 ?>
               <a href="#" class=""><span class="mr-2  icon-envelope-open-o"></span> <span class="d-none d-md-inline-block"><?php  echo htmlentities($row['Email']);?></span></a>
               <span class="mx-md-2 d-inline-block"></span>
@@ -13,17 +12,12 @@ while ($row=mysqli_fetch_array($query)) {
 
 <?php } ?>
               <div class="float-right">
-
                 <a href="#" class=""><span class="mr-2  icon-twitter"></span> <span class="d-none d-md-inline-block">Twitter</span></a>
                 <span class="mx-md-2 d-inline-block"></span>
                 <a href="#" class=""><span class="mr-2  icon-facebook"></span> <span class="d-none d-md-inline-block">Facebook</span></a>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
       </div>
             <header class="site-navbar js-sticky-header site-navbar-target p-2" role="banner">
@@ -47,10 +41,11 @@ while ($row=mysqli_fetch_array($query)) {
                     </ul>
                   </li>
                   <li class="has-children">
-                    <a href="#about-section" class="nav-link">login</a>
+                    <a href="#about-section" class="nav-link">Login</a>
                     <ul class="dropdown arrow-top">
-                      <li><a href="raise-complaint.php" class="nav-link">Raise Complaint</a></li>
-                      <li><a href="track-complain.php" class="nav-link">Track Complaint</a></li>  
+                      <li><a href="admin/index.php" class="nav-link">Admin</a></li>
+                      <li><a href="staff/index.php" class="nav-link">Staff</a></li> 
+                      <li><a href="deliveryAgent/index.php" class="nav-link">Delivery Agent</a></li>   
                     </ul>
                   </li>
                 </ul>
