@@ -11,7 +11,7 @@ if(isset($_POST['submit']))
         $query=mysqli_query($con,"select ID from tbldeliveryagent where  DAEmail='$email' and DAMobilenumber='$contactno' ");
     $ret=mysqli_fetch_array($query);
     if($ret>0){
-      $_SESSION['contactno']=$contactno;git
+      $_SESSION['contactno']=$contactno;
       $_SESSION['email']=$email;
      header('location:resetpassword.php');
     }
