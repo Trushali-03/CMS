@@ -24,7 +24,7 @@ while ($row=mysqli_fetch_array($query)) {
         <div class="container">
           <div class="row align-items-center position-relative">
             <div class="site-logo" class="col-4">
-              <a href="index.php" class="text-black"><span class="text-primary ">CMS</a>
+              <a href="index.php" class="text-black"><span class="text-primary ">TRAVOX</a>
             </div>
             <div class="col-12">
               <nav class="site-navigation text-right ml-auto " role="navigation">
@@ -51,7 +51,8 @@ while ($row=mysqli_fetch_array($query)) {
                 </ul>
               </nav>
             </div>
-            <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+            <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black">
+            <span class="icon-menu h3"></span></a></div>
           </div>
         </div>
       </header>
