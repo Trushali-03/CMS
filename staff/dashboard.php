@@ -31,16 +31,12 @@ if (strlen($_SESSION['cmssid']==0)) {
 
 
     <body class="fixed-left">
-
         <!-- Begin page -->
         <div id="wrapper">
-
             <?php include_once('includes/header.php');?>
            <?php include_once('includes/leftbar.php');?>
 
-
-            <!-- ========== Left Sidebar Start ========== -->
-            
+            <!-- ========== Left Sidebar Start ========== --> 
             <!-- ============================================================== -->
             <!-- Start right Content here -->
             <!-- ============================================================== -->
@@ -48,20 +44,15 @@ if (strlen($_SESSION['cmssid']==0)) {
                 <!-- Start content -->
                 <div class="content">
                     <div class="container-fluid">
-
-                        <div class="row">
+                         <div class="row">
 							<div class="col-xl-12">
 								<div class="page-title-box">
                                     <h4 class="page-title float-left">Dashboard</h4>
-
-                                   
-
                                     <div class="clearfix"></div>
                                 </div>
 							</div>
 						</div>
                         <!-- end row -->
-
 <?php $query=mysqli_query($con,"Select * from tblcourier ");
 $usercount=mysqli_num_rows($query);
 ?>
@@ -74,8 +65,6 @@ $usercount=mysqli_num_rows($query);
                                     
                                 </div>
                             </div>
-
-
 <?php $query=mysqli_query($con,"Select * from tblcourier where Status is null || Status=''");
 $newcount=mysqli_num_rows($query);
 ?>
@@ -83,22 +72,17 @@ $newcount=mysqli_num_rows($query);
                                 <div class="card-box tilebox-one" style="border:solid 2px red">
                                      <i class="zmdi zmdi-file float-right"></i>
                                     <a class="text-muted text-uppercase m-b-20" href="courier.php" target="blank">New Courier
-                                    <h2 ><?php echo $newcount;?></h2></a>
-                                    
+                                    <h2 ><?php echo $newcount;?></h2></a>   
                                 </div>
                             </div>
-
-
 <?php $query1=mysqli_query($con,"Select * from  tblcourier where Status ='Courier Pickup'");
 $pickcount=mysqli_num_rows($query1);
 ?>
                             <div class="col-md-6 col-xl-3">
                                 <div class="card-box tilebox-one" style="border:solid 2px yellow">
-
                                     <i class="zmdi zmdi-file-text float-right"></i>
                                     <a class="text-muted text-uppercase m-b-20" href="courierpickup.php" target="blank">Total Courier Pickup</a>
-                                    <h2><?php echo $pickcount;?></h2>
-                                    
+                                    <h2><?php echo $pickcount;?></h2>     
                                 </div>
                             </div>
 <?php $query2=mysqli_query($con,"Select * from  tblcourier where Status ='Shipped'");
@@ -109,17 +93,15 @@ $shippedcount=mysqli_num_rows($query2);
                                     <i class="zmdi zmdi-upload float-right"></i>
                                    <a class="text-muted text-uppercase m-b-20" href="shipped.php" target="blank">Total Shipped</a>
                                     <h2><?php echo $shippedcount;?></h2>
-
                                 </div>
                                 </div>
-
                         </div>
 
 
                         <div class="row">
 
 
-                            <?php $query3=mysqli_query($con,"Select * from  tblcourier where Status ='Intransit'");
+                            <?php $query3=mysqli_query($con,"Select * from  tblcourier where Status ='In transit'");
 $intransitcount=mysqli_num_rows($query3);
 ?>
                             <div class="col-md-6 col-xl-3">

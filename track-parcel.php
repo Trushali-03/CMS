@@ -60,7 +60,7 @@ include('includes/dbconnection.php');
 <?php
 if(isset($_POST['search'])){
 $searchdata=$_POST['searchdata'];
-$ret=mysqli_query($con,"select tblcourier.id as cid, tblcourier.RefNumber,tblcourier.SenderName,tblcourier.SenderCity,tblcourier.SenderState,tblcourier.SenderPincode,tblcourier.SenderCountry,tblcourier.RecipientName,tblcourier.RecipientCity,tblcourier.RecipientState,tblcourier.RecipientPincode,tblcourier.RecipientCountry from  tblcourier where tblcourier.RefNumber='$searchdata'");
+$ret=mysqli_query($con,"select tblcourier.id, tblcourier.RefNumber,tblcourier.SenderName,tblcourier.SenderCity,tblcourier.SenderState,tblcourier.SenderPincode,tblcourier.SenderCountry,tblcourier.RecipientName,tblcourier.RecipientCity,tblcourier.RecipientState,tblcourier.RecipientPincode,tblcourier.RecipientCountry from  tblcourier where tblcourier.RefNumber='$searchdata'");
 $num=mysqli_num_rows($ret);
 if($num >0){
 while ($row=mysqli_fetch_array($ret)) {
@@ -132,10 +132,8 @@ while ($row=mysqli_fetch_array($ret)) {
           </div>
         </div>
       </div>
-      <?php
-
-  $cid=$row['cid'];   
-$ret=mysqli_query($con,"select remark,status,StatusDate from tblcouriertracking where  CourierId='$cid'");
+      <?php 
+$ret=mysqli_query($con,"select Status,StatusDate from tblcouriertracking where  RefNumber='$searchdata'order by StatusDate ASC");
 $num=mysqli_num_rows($ret);
 if($num>0){
 ?>
@@ -148,13 +146,11 @@ if($num>0){
   <tr>
     <th>Date / Time</th>
     <th>Status </th>
-    <th>remark</th>
   </tr>
  <?php while ($row=mysqli_fetch_array($ret)) { ?>
 <tr>
 <td><?php  echo $row['StatusDate'];?></td>
-<td><?php  echo $row['status'];?></td>
-<td><?php  echo $row['remark'];?></td>
+<td><?php  echo $row['Status'];?></td>
 </tr>  
 <tr>
 <?php }?>

@@ -6,32 +6,32 @@ if (strlen($_SESSION['cmsaid']==0)) {
   header('location:logout.php');
   } else{
 
-if(isset($_POST['submit']))
-  {
+// if(isset($_POST['submit']))
+//   {
     
-    $cid=$_GET['editid'];
-      $remark=$_POST['remark'];
-      $status=$_POST['status'];
+//     $cid=$_GET['editid'];
+//       $remark=$_POST['remark'];
+//       $status=$_POST['status'];
  
     
-   $query=mysqli_query($con,"insert into tblcouriertracking(CourierId,remark,status) value('$cid',' $remark','$status')");
-   $query.=mysqli_query($con, "update  tblcourier set Status='$status' where ID='$cid'");
-    if ($query) {
-    $msg="Remark and Status has been updated.";
-  }
-  else
-    {
-      $msg="Something Went Wrong. Please try again";
-    }
+//    $query=mysqli_query($con,"insert into tblcouriertracking(CourierId,remark,status) value('$cid',' $remark','$status')");
+//    $query.=mysqli_query($con, "update  tblcourier set Status='$status' where ID='$cid'");
+//     if ($query) {
+//     $msg="Remark and Status has been updated.";
+//   }
+//   else
+//     {
+//       $msg="Something Went Wrong. Please try again";
+//     }
 
   
-}
+// }
   
 //Code For Deletion
 if($_GET['action']=='delete'){
 $ctid=intval($_GET['ctid']);
 $cid=$_GET['cid'];
-$query=mysqli_query($con,"delete from tblcouriertracking where  ID='$ctid'");  
+$query=mysqli_query($con,"delete from tblcouriertracking where  RefNumber='$ctid'");  
 if($query){
 echo "<script>alert('Courier History  deleted successfully.');</script>";
 echo "<script> document.location = 'view-courier.php?editid=$cid'; </script>";
@@ -98,7 +98,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
  <?php
 $cid=$_GET['editid'];
 $tid=$_GET['tid'];
-$ret=mysqli_query($con,"select * from tblcourier where ID='$cid' || RefNumber='$tid' ");
+$ret=mysqli_query($con,"select * from tblcourier where RefNumber='$cid' || RefNumber='$tid' ");
 $cnt=1;
 while ($row=mysqli_fetch_array($ret)) {
 
@@ -226,8 +226,8 @@ if($status==''): ?>
 <span class="badge bg-dark float-end">Courier Pickup</span>
 <?php elseif($status=='Shipped'):?>
 <span class="badge bg-info float-end">Shipped</span>
-<?php elseif($status=='Intransit'):?>
-<span class="badge bg-primary float-end">Intransit</span>
+<?php elseif($status=='In transit'):?>
+<span class="badge bg-primary float-end">In transit</span>
 <?php elseif($status=='Arrived at Destination'):?>
 <span class="badge bg-primary float-end">Arrived at Destination</span>
 <?php elseif($status=='Out for Delivery'):?>
@@ -243,7 +243,7 @@ if($status==''): ?>
 <?php } ?>
 
 <?php  
-$ret1=mysqli_query($con,"select tblcouriertracking.remark,tblcouriertracking.status as corstatus,tblcouriertracking.StatusDate,tblcouriertracking.ID as trackid,tblcourier.ID as cid from tblcourier   join tblcouriertracking on tblcouriertracking.CourierId=tblcourier.ID where tblcourier.ID='$cid'");
+$ret1=mysqli_query($con,"select Status,StatusDate from tblcouriertracking where  RefNumber='$cid' order by StatusDate ASC");
 $cnt=1;
  $count=mysqli_num_rows($ret1);
 if($count>0){
@@ -255,40 +255,19 @@ if($count>0){
   </tr>
   <tr>
     <th>#</th>
-<th>Remark</th>
 <th>Status</th>
 <th>Time</th>
-<th>Action</th>
+<!-- <th>Action</th> -->
 </tr>
 <?php  
 while ($row=mysqli_fetch_array($ret1)) { 
   ?>
 <tr>
   <td><?php echo $cnt;?></td>
- <td><?php  echo $row['remark'];?></td> 
- 
-                <td><?php $status=$row['corstatus'];
-if($status==''): ?>
-<span class="badge bg-danger float-end">New</span>
-<?php elseif($status=='Courier Pickup'):?>
-<span class="badge bg-dark float-end">Courier Pickup</span>
-<?php elseif($status=='Shipped'):?>
-<span class="badge bg-info float-end">Shipped</span>
-<?php elseif($status=='Intransit'):?>
-<span class="badge bg-primary float-end">Intransit</span>
-<?php elseif($status=='Arrived at Destination'):?>
-<span class="badge bg-primary float-end">Arrived at Destination</span>
-<?php elseif($status=='Out for Delivery'):?>
-<span class="badge bg-primary float-end">Out for Delivery</span>
-<?php elseif($status=='Delivered'):?>
-<span class="badge bg-success float-end">Delivered</span>
-<?php endif;?>
-</td>
-
-
+   <td><?php echo $row['Status'];?></td>
    <td><?php  echo $row['StatusDate'];?></td> 
-<td>
-     <a href="view-courier.php?action=delete&&ctid=<?php echo $row['trackid']; ?>&&cid=<?php echo $row['cid']; ?>"  title="Delete this record" onclick="return confirm('Do you really want to delete this record?');" class="btn btn-danger">Delete </a>     </td>
+<!-- <td>
+     <a href="view-courier.php?action=delete&&ctid=<?php echo $row['trackid']; ?>&&cid=<?php echo $row['cid']; ?>"  title="Delete this record" onclick="return confirm('Do you really want to delete this record?');" class="btn btn-danger">Delete </a>     </td> -->
 </tr>
 <?php $cnt=$cnt+1;} ?>
 </table>
