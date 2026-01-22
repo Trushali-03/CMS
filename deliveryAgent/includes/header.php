@@ -4,12 +4,11 @@
                     <div class="logo">
                         <i class="zmdi zmdi-group-work icon-c-logo"></i>
                          
-                        <span>Staff Panel </span>
+                        <span>Delivery Agent</span>
                     </div>
                 </div>
 
                 <nav class="navbar-custom">
-
                     <ul class="list-inline float-right mb-0">
                         <li class="list-inline-item dropdown notification-list">
                             <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
@@ -18,10 +17,10 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview">
                                                  <?php
-$admid=$_SESSION['cmssid'];
-$ret=mysqli_query($con,"select StaffName from tblstaff where ID='$admid'");
+$daid=$_SESSION['cmssid'];
+$ret=mysqli_query($con,"select DAName from tbldeliveryagent where ID='$daid'");
 $row=mysqli_fetch_array($ret);
-$name=$row['StaffName'];
+$name=$row['DAName'];
 
 ?>
      
@@ -30,7 +29,7 @@ $name=$row['StaffName'];
                                 </div>
 
                                 <!-- item-->
-                                <a href="staffprofile.php" class="dropdown-item notify-item">
+                                <a href="DAProfile.php" class="dropdown-item notify-item">
                                     <i class="zmdi zmdi-account-circle"></i> <span>Profile</span>
                                 </a>
 

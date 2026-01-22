@@ -117,7 +117,7 @@ while ($row=mysqli_fetch_array($ret)) {
                   <td><?php  echo $row['StaffName'];?></td>
                 <td><?php  echo $row['StaffMobilenumber'];?></td>
                   <td><a href="edit-staff-detail.php?editid=<?php echo $row['ID'];?>" class="btn btn-primary">Edit</a>  
-<?php if($row['status']=="1"){?>
+<?php if($row['Status']=="1"){?>
 <a href="manage-staff.php?inactiveid=<?php echo $row['ID'];?>" title="Inactive this account" onclick="return confirm('Do you really want to inactive this account.');" class="btn btn-warning">Inactive</a>
 <?php } else {?>
 <a href="manage-staff.php?activeid=<?php echo $row['ID'];?>" title="Active this account" onclick="return confirm('Do you really want to Active this account.');" class="btn btn-success">Active</a>

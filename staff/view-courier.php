@@ -5,35 +5,12 @@ include('includes/dbconnection.php');
 if (strlen($_SESSION['cmssid']==0)) {
   header('location:logout.php');
   } else{
-
-if(isset($_POST['submit']))
-  {
-    
-    $cid=$_GET['editid'];
-      $remark=$_POST['remark'];
-      $status=$_POST['status'];
- 
-    
-   $query=mysqli_query($con,"insert into tblcouriertracking(CourierId,remark,status) value('$cid',' $remark','$status')");
-   $query.=mysqli_query($con, "update  tblcourier set Status='$status' where ID='$cid'");
-    if ($query) {
-    $msg="Remark and Status has been updated.";
-     echo '<script>alert("Remark and Status has been updated.")</script>';
-    echo "<script>window.location.href ='total-courier.php'</script>";
-  }
-  else
-    {
-       echo '<script>alert("Something Went Wrong. Please try again")</script>';
-    }
-
-  
-}
   
   //Code For Deletion
 if($_GET['action']=='delete'){
-$ctid=intval($_GET['ctid']);
-$cid=$_GET['cid'];
-$query=mysqli_query($con,"delete from tblcouriertracking where  ID='$ctid'");  
+$trackid=($_GET['ID']);
+$cid=$_GET['editid'];
+$query=mysqli_query($con,"delete from tblcouriertracking where  RefNumber='$trackid'");  
 if($query){
 echo "<script>alert('Courier History  deleted successfully.');</script>";
 echo "<script> document.location = 'view-courier.php?editid=$cid'; </script>";
@@ -42,8 +19,6 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 }
 
 }
-  
-
   ?>
 
 
@@ -98,7 +73,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 <?php }?>
  <?php
 $cid=$_GET['editid'];
-$ret=mysqli_query($con,"select * from tblcourier where ID='$cid'");
+$ret=mysqli_query($con,"select * from tblcourier where RefNumber='$cid'");
 $cnt=1;
 while ($row=mysqli_fetch_array($ret)) {
 
@@ -226,8 +201,8 @@ if($fstatus==''): ?>
 <span class="badge bg-dark float-end">Courier Pickup</span>
 <?php elseif($fstatus=='Shipped'):?>
 <span class="badge bg-info float-end">Shipped</span>
-<?php elseif($fstatus=='Intransit'):?>
-<span class="badge bg-primary float-end">Intransit</span>
+<?php elseif($fstatus=='In transit'):?>
+<span class="badge bg-primary float-end">In transit</span>
 <?php elseif($fstatus=='Arrived at Destination'):?>
 <span class="badge bg-primary float-end">Arrived at Destination</span>
 <?php elseif($fstatus=='Out for Delivery'):?>
@@ -243,8 +218,7 @@ if($fstatus==''): ?>
 <?php } ?>
 
 <?php  
-$ret1=mysqli_query($con,"select tblcouriertracking.remark,tblcouriertracking.status as corstatus,tblcouriertracking.StatusDate,tblcouriertracking.ID as trackid,tblcourier.ID as cid from tblcourier   
-  join tblcouriertracking on tblcouriertracking.CourierId=tblcourier.ID where tblcourier.ID='$cid'");
+$ret1=mysqli_query($con,"select Status,StatusDate from tblcouriertracking where  RefNumber='$cid' order by StatusDate ASC");
 $cnt=1;
  $count=mysqli_num_rows($ret1);
 if($count>0){
@@ -256,142 +230,23 @@ if($count>0){
   </tr>
   <tr>
     <th>#</th>
-<th>Remark</th>
 <th>Status</th>
 <th>Time</th>
-<th>Action</th>
 </tr>
 <?php  
 while ($row=mysqli_fetch_array($ret1)) { 
   ?>
 <tr>
   <td><?php echo $cnt;?></td>
- <td><?php  echo $row['remark'];?></td> 
- 
-                <td><?php $status=$row['corstatus'];
-if($status==''): ?>
-<span class="badge bg-danger float-end">New</span>
-<?php elseif($status=='Courier Pickup'):?>
-<span class="badge bg-dark float-end">Courier Pickup</span>
-<?php elseif($status=='Shipped'):?>
-<span class="badge bg-info float-end">Shipped</span>
-<?php elseif($status=='Intransit'):?>
-<span class="badge bg-primary float-end">Intransit</span>
-<?php elseif($status=='Arrived at Destination'):?>
-<span class="badge bg-primary float-end">Arrived at Destination</span>
-<?php elseif($status=='Out for Delivery'):?>
-<span class="badge bg-primary float-end">Out for Delivery</span>
-<?php elseif($status=='Delivered'):?>
-<span class="badge bg-success float-end">Delivered</span>
-<?php endif;?>
-</td>
-
-
-   <td><?php  echo $row['StatusDate'];?></td> 
-<td>
-     <a href="view-courier.php?action=delete&&ctid=<?php echo $row['trackid']; ?>&&cid=<?php echo $row['cid']; ?>"  title="Delete this record" onclick="return confirm('Do you really want to delete this record?');" class="btn btn-danger">Delete </a>     </td>
+  <td><?php echo $row['Status'];?></td>
+  <td><?php  echo $row['StatusDate'];?></td> 
+<!-- <td>
+     <a href="view-courier.php?action=delete&&ID=<?php echo $row['RefNumber']; ?>&&editid=<?php echo $cid; ?>"  title="Delete this record" onclick="return confirm('Do you really want to delete this record?');" class="btn btn-danger">Delete </a>     
+  </td> -->
 </tr>
 <?php $cnt=$cnt+1;} ?>
 </table>
 <?php } ?>
-
-
-
-
-<?php  
-if ($status!='Delivered'){
-?> 
-<p align="center">                            
- <button class="btn btn-primary waves-effect waves-light w-lg" data-toggle="modal" data-target="#myModal">Take Action</button></p>  
-
-<?php } ?>
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Take Action</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-<form name="submit" method="post" enctype="multipart/form-data"> 
-<table width="100%">
-<tr>
-    <th>Staff Remark :</th>
-    <td>
-    <textarea name="remark" placeholder="" rows="6" cols="14" class="form-control wd-450" required="true"></textarea></td>
-  </tr>
-
-  <tr style="margin-top:5%;">
-    <th>Status:</th>
-    <td>
-   <select name="status" class="form-control wd-450" required="true" >
-<?php 
-if($fstatus==''): ?>
-     <option value="Courier Pickup">Courier Pickup</option>
-     <option value="Shipped">Shipped</option>
-     <option value="Intransit">Intransit</option>
-     <option value="Arrived at Destination">Arrived at Destination</option>
-     <option value="Out for Delivery">Out for Delivery</option>
-     <option value="Delivered" style="color: green">Delivered</option>
-<?php elseif($fstatus=='Courier Pickup'):?>
-     <option value="Shipped">Shipped</option>
-     <option value="Intransit">Intransit</option>
-     <option value="Arrived at Destination">Arrived at Destination</option>
-     <option value="Out for Delivery">Out for Delivery</option>
-     <option value="Delivered" style="color: green">Delivered</option>
-<?php elseif($fstatus=='Shipped'):?>
-   <option value="Intransit">Intransit</option>
-     <option value="Arrived at Destination">Arrived at Destination</option>
-     <option value="Out for Delivery">Out for Delivery</option>
-     <option value="Delivered" style="color: green">Delivered</option>
-<?php elseif($fstatus=='Intransit'):?>
-     <option value="Arrived at Destination">Arrived at Destination</option>
-     <option value="Out for Delivery">Out for Delivery</option>
-     <option value="Delivered" style="color: green">Delivered</option>
-<?php elseif($fstatus=='Arrived at Destination'):?>
-  <option value="Out for Delivery">Out for Delivery</option>
-     <option value="Delivered" style="color: green">Delivered</option>
-<?php elseif($fstatus=='Out for Delivery'):?>
-     <option value="Delivered" style="color: green">Delivered</option>
-
-<?php endif;?>
-
-
-
-
-
-   </select></td>
-  </tr>
-
-
-</table>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                   <button type="submit" name="submit" class="btn btn-primary">Update</button>
-                                                     </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-
-
-</div></div>
-</div>
-
-
-
-       
-            
-
             <?php include_once('includes/footer.php');?>
 
 </div>

@@ -119,7 +119,7 @@ $shippedcount=mysqli_num_rows($query2);
                         <div class="row">
 
 
-                            <?php $query3=mysqli_query($con,"Select * from  tblcourier where Status ='Intransit'");
+                            <?php $query3=mysqli_query($con,"Select * from  tblcourier where Status ='In transit'");
 $intransitcount=mysqli_num_rows($query3);
 ?>
                             <div class="col-md-6 col-xl-3">

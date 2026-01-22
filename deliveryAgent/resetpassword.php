@@ -2,37 +2,56 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
+error_reporting(0);
 
 if(isset($_POST['submit']))
   {
-    $contactno=$_POST['contactno'];
-    $email=$_POST['email'];
+    $contactno=$_SESSION['contactno'];
+    $email=$_SESSION['email'];
+    $password=md5($_POST['newpassword']);
 
-        $query=mysqli_query($con,"select ID from tbldeliveryagent where  DAEmail='$email' and DAMobileNumber='$contactno' ");
-    $ret=mysqli_fetch_array($query);
-    if($ret>0){
-      $_SESSION['contactno']=$contactno;
-      $_SESSION['email']=$email;
-     header('location:resetpassword.php');
-    }
-    else{
-      $msg="Invalid Details. Please try again.";
-    }
+        $query=mysqli_query($con,"update tbldeliveryagent set DAPassword='$password'  where  DAEmail='$email' && DAMobileNumber='$contactno' ");
+   if($query)
+   {
+echo "<script>alert('Password successfully changed');</script>";
+session_destroy();
+   }
+  
   }
   ?>
-  
-  <!doctype html>
+
+
+
+<!doctype html>
 <html lang="en">
 
     <head>
         <title>CMS Forgot Password</title>
+
         <!-- Bootstrap CSS -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
         <!-- App CSS -->
         <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+
         <!-- Modernizr js -->
         <script src="assets/js/modernizr.min.js"></script>
+<script type="text/javascript">
+function checkpass()
+{
+if(document.changepassword.newpassword.value!=document.changepassword.confirmpassword.value)
+{
+alert('New Password and Confirm Password field does not match');
+document.changepassword.confirmpassword.focus();
+return false;
+}
+return true;
+} 
+
+</script>
     </head>
+
+
     <body>
 
         <div class="account-pages"></div>
@@ -44,27 +63,29 @@ if(isset($_POST['submit']))
                     <div class="text-center m-t-20">
                         <a href="../index.php" class="logo">
                             <i class="zmdi zmdi-group-work icon-c-logo"></i>
-                            <span>CMS|| Forgot Password</span>
+                            <span>CMS|| Reset Your Password!</span>
                         </a>
                     </div>
                     <div class="m-t-10 p-20">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <h6 class="text-muted text-uppercase m-b-0 m-t-0">Forgot Password</h6>
+                                <h6 class="text-muted text-uppercase m-b-0 m-t-0">Reset Your Password!</h6>
                             </div>
                         </div>
-                        <p style="font-size:16px; color:red" align="center"></p>
-                        <form class="m-t-20" action="" method="post" name="submit">
+                        <p style="font-size:16px; color:red" align="center"> <?php if($msg){
+    echo $msg;
+  }  ?> </p>
+<form class="m-t-20" action="" method="post" name="changepassword" onsubmit="return checkpass();">
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="form-control" type="email" required="" name="email" placeholder="DA Email">
+                                    <input class="form-control" type="password" required="" name="newpassword" placeholder="New Password">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="form-control" type="text" name="contactno" required="" placeholder="DA Mobile Number">
+                                    <input class="form-control" type="password" name="confirmpassword" required="" placeholder="Confirm Your Password">
                                 </div>
                             </div>
 
@@ -90,11 +111,17 @@ if(isset($_POST['submit']))
                 </div>
             </div>
             <!-- end card-box-->
+
+            
+
         </div>
         <!-- end wrapper page -->
+
+
         <script>
             var resizefunc = [];
         </script>
+
         <!-- jQuery  -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
