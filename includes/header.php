@@ -23,8 +23,9 @@ while ($row=mysqli_fetch_array($query)) {
             <header class="site-navbar js-sticky-header site-navbar-target p-2" role="banner">
         <div class="container">
           <div class="row align-items-center position-relative">
-            <div class="site-logo" class="col-4">
-              <a href="index.php" class="text-black"><span class="text-primary ">TRAVOX</a>
+            <div class="site-logo col-4">
+              <a href="index.php"> <img src="images\IMG-20260119-WA0000.jpg" alt="Website Logo" class="logo" style="width:60px; height:60px; border-radius:50%; object-fit:cover;"> </a>
+              <a href="index.php" class="travox-logo text-info"><span class="text">TRAVOX</span></a>
             </div>
             <div class="col-12">
               <nav class="site-navigation text-right ml-auto " role="navigation">
