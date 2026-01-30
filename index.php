@@ -243,7 +243,7 @@ echo "<script>window.location.href ='index.php'</script>";
       </div>
 
       <div class="service text-center">
-        <img src="images/cargo_air_small.jpg" class="img-fluid">
+        <img src="images\aeroplane.jpg" class="img-fluid">
         <h3 class="text-info"><b>Air Freight</b></h3>
         <p class="text-black">Swift and reliable air transport designed for time-sensitive shipments, offering global reach and guaranteed efficiency to keep your business moving.</p>
       </div>
