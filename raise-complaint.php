@@ -83,10 +83,10 @@ echo "<script>window.location.href ='index.php'</script>";
       <div class="container">
         <div class="row">
           <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="">
-            <div class="block-heading-1">
+            <!-- <div class="block-heading-1"> -->
             
-              <h2>Raise Tickets</h2>
-            </div>
+              <h2  class="text-info"><span class="text-info-emphasis"><b>Raise Tickets<b></h2>
+            <!-- </div> -->
           </div>
         </div>
         <div class="row">
@@ -112,7 +112,7 @@ echo "<script>window.location.href ='index.php'</script>";
               </div>
               <div class="form-group row">
                 <div class="col-md-6 mr-auto">
-                  <input type="submit" name="submit" class="btn btn-block btn-primary text-white py-3 px-5" value="Submit">
+                  <input type="submit" name="submit" class="btn btn-block py-3 px-5" value="Submit" style="background-color:  #0cb0d1; color: black; border: 2px solid black !important; padding: 10px 20px; font-weight: bold;margin-left: 20px;">
                 </div>
               </div>
             </form>

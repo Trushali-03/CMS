@@ -27,9 +27,9 @@ if(isset($_POST['submit']))
     <head>
         <title>CMS Forgot Password</title>
         <!-- Bootstrap CSS -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
         <!-- App CSS -->
-        <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/style-login.css" rel="stylesheet" type="text/css" />
         <!-- Modernizr js -->
         <script src="assets/js/modernizr.min.js"></script>
     </head>
@@ -37,47 +37,52 @@ if(isset($_POST['submit']))
 
         <div class="account-pages"></div>
         <div class="clearfix"></div>
-        <div class="wrapper-page">
+        <div class="neumorphic neumorphic-card">
 
-            <div class="account-bg">
-                <div class="card-box mb-0">
+            <!-- <div class="account-bg">
+                <div class="card-box mb-0"> -->
                     <div class="text-center m-t-20">
-                        <a href="../index.php" class="logo">
-                            <i class="zmdi zmdi-group-work icon-c-logo"></i>
-                            <span>CMS|| Forgot Password</span>
+                        <!-- <a href="../index.php" class="logo">
+                            <i class="zmdi zmdi-group-work icon-c-logo"></i> -->
+                            <h1 style="margin-bottom: 30px;">CMS|| Forgot Password</h1>
                         </a>
                     </div>
+                    <div class="neumorphic neumorphic-card-box ">
                     <div class="m-t-10 p-20">
                         <div class="row">
-                            <div class="col-12 text-center">
+                            <!-- <div class="col-12 text-center">
                                 <h6 class="text-muted text-uppercase m-b-0 m-t-0">Forgot Password</h6>
-                            </div>
+                            </div> -->
                         </div>
-                        <p style="font-size:16px; color:red" align="center"></p>
+                        <p style="font-size:16px; color:red" align="center">
+                            <?php if($msg){
+    echo $msg;
+  }  ?> </p>
                         <form class="m-t-20" action="" method="post" name="submit">
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="form-control" type="email" required="" name="email" placeholder="DA Email">
+                                    <input class="neumorphic neumorphic-input" type="email" required="" name="email" placeholder="DA Email">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="form-control" type="text" name="contactno" required="" placeholder="DA Mobile Number">
+                                    <input class="neumorphic neumorphic-input" type="text" name="contactno" required="" placeholder="DA Mobile Number">
                                 </div>
                             </div>
 
 
                             <div class="form-group text-center row m-t-10">
                                 <div class="col-12">
-                                    <button class="btn btn-success btn-block waves-effect waves-light" type="submit" name="submit">Reset</button>
+                                    <button class="neumorphic neumorphic-button" type="submit" name="submit">Reset</button>
                                 </div>
                             </div>
+                            <br>
 
                             <div class="form-group row m-t-30 mb-0">
                                 <div class="col-12">
-                                    <a href="index.php" class="text-muted"><i class="fa fa-lock m-r-5"></i> Sign In</a>
+                                    <a href="index.php" class="text-muted neumorphic-button"><i class="fa fa-lock m-r-5"></i> Sign In</a>
                                 </div>
                             </div>
 
@@ -87,7 +92,7 @@ if(isset($_POST['submit']))
                     </div>
 
                     <div class="clearfix"></div>
-                </div>
+                <!-- </div> -->
             </div>
             <!-- end card-box-->
         </div>
