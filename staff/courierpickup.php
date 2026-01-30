@@ -10,9 +10,9 @@ if (strlen($_SESSION['cmssid']==0)) {
 if($_GET['action']=='delete'){
 $cid=intval($_GET['cid']);
 
-$query=mysqli_query($con,"delete from tblcourier where  ID='$cid'");
+$query=mysqli_query($con,"delete from tblcourier where  RefNumber='$cid'");
 if($query){
-$query=mysqli_query($con,"delete from tblcouriertracking where  CourierId='$cid'");    
+$query=mysqli_query($con,"delete from tblcouriertracking where  RefNumber='$cid'");    
 echo "<script>alert('Courier Record  deleted successfully.');</script>";
 echo "<script type='text/javascript'> document.location = 'courierpickup.php'; </script>";
 } else {
@@ -84,7 +84,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
                                         </tr>
                                         </thead>
  <?php
-$ret=mysqli_query($con,"select *from tblcourier where Status='Courier Pickup'");
+$ret=mysqli_query($con,"select *from tblcourier where Status='Picked Up'");
 $cnt=1;
 $count=mysqli_num_rows($ret);
 if($count>0){
@@ -101,12 +101,12 @@ while ($row=mysqli_fetch_array($ret)) {
                 <td><?php $status=$row['Status'];
 if($status==''): ?>
 <span class="badge bg-danger float-end">New</span>
-<?php elseif($status=='Courier Pickup'):?>
-<span class="badge bg-dark float-end">Courier Pickup</span>
+<?php elseif($status=='Picked Up'):?>
+<span class="badge bg-dark float-end">Picked Up</span>
 <?php elseif($status=='Shipped'):?>
 <span class="badge bg-info float-end">Shipped</span>
-<?php elseif($status=='Intransit'):?>
-<span class="badge bg-primary float-end">Intransit</span>
+<?php elseif($status=='In transit'):?>
+<span class="badge bg-primary float-end">In transit</span>
 <?php elseif($status=='Arrived at Destination'):?>
 <span class="badge bg-primary float-end">Arrived at Destination</span>
 <?php elseif($status=='Out for Delivery'):?>
@@ -123,9 +123,9 @@ if($status==''): ?>
 
 
                 <td><?php  echo $row['CourierDate'];?></td>
-                                  <td><a href="view-courier.php?editid=<?php echo $row['ID'];?>" class="btn btn-primary" target="blank">View Details</a>
+                                  <td><a href="view-courier.php?editid=<?php echo $row['RefNumber'];?>" class="btn btn-primary" target="blank">View Details</a>
 
-               <a href="courierpickup.php?action=delete&&cid=<?php echo $row['ID']; ?>"  title="Delete this record" onclick="return confirm('Do you really want to delete this record?');" class="btn btn-danger">Delete </a>                      
+               <a href="courierpickup.php?action=delete&&cid=<?php echo $row['RefNumber']; ?>"  title="Delete this record" onclick="return confirm('Do you really want to delete this record?');" class="btn btn-danger">Delete </a>                      
 
 
                                   </td>

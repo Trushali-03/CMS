@@ -2,87 +2,103 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
+error_reporting(0);
 
 if(isset($_POST['submit']))
   {
-    $contactno=$_POST['contactno'];
-    $email=$_POST['email'];
+    $contactno=$_SESSION['contactno'];
+    $email=$_SESSION['email'];
+    $password=md5($_POST['newpassword']);
 
-        $query=mysqli_query($con,"select ID from tbldeliveryagent where  DAEmail='$email' and DAMobileNumber='$contactno' ");
-    $ret=mysqli_fetch_array($query);
-    if($ret>0){
-      $_SESSION['contactno']=$contactno;
-      $_SESSION['email']=$email;
-     header('location:resetpassword.php');
-    }
-    else{
-      $msg="Invalid Details. Please try again.";
-    }
+        $query=mysqli_query($con,"update tbldeliveryagent set DAPassword='$password'  where  DAEmail='$email' && DAMobileNumber='$contactno' ");
+   if($query)
+   {
+echo "<script>alert('Password successfully changed');</script>";
+session_destroy();
+   }
+  
   }
   ?>
-  
-  <!doctype html>
+
+
+
+<!doctype html>
 <html lang="en">
 
     <head>
         <title>CMS Forgot Password</title>
+
         <!-- Bootstrap CSS -->
-        <!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
         <!-- App CSS -->
-        <link href="assets/css/style-login.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+
         <!-- Modernizr js -->
         <script src="assets/js/modernizr.min.js"></script>
+<script type="text/javascript">
+function checkpass()
+{
+if(document.changepassword.newpassword.value!=document.changepassword.confirmpassword.value)
+{
+alert('New Password and Confirm Password field does not match');
+document.changepassword.confirmpassword.focus();
+return false;
+}
+return true;
+} 
+
+</script>
     </head>
+
+
     <body>
 
         <div class="account-pages"></div>
         <div class="clearfix"></div>
-        <div class="neumorphic neumorphic-card">
+        <div class="wrapper-page">
 
-            <!-- <div class="account-bg">
-                <div class="card-box mb-0"> -->
+            <div class="account-bg">
+                <div class="card-box mb-0">
                     <div class="text-center m-t-20">
-                        <!-- <a href="../index.php" class="logo">
-                            <i class="zmdi zmdi-group-work icon-c-logo"></i> -->
-                            <h1 style="margin-bottom: 30px;">CMS|| Forgot Password</h1>
+                        <a href="../index.php" class="logo">
+                            <i class="zmdi zmdi-group-work icon-c-logo"></i>
+                            <span>CMS|| Reset Your Password!</span>
                         </a>
                     </div>
-                    <div class="neumorphic neumorphic-card-box ">
                     <div class="m-t-10 p-20">
                         <div class="row">
-                            <!-- <div class="col-12 text-center">
-                                <h6 class="text-muted text-uppercase m-b-0 m-t-0">Forgot Password</h6>
-                            </div> -->
+                            <div class="col-12 text-center">
+                                <h6 class="text-muted text-uppercase m-b-0 m-t-0">Reset Your Password!</h6>
+                            </div>
                         </div>
-                        <p style="font-size:16px; color:red" align="center">
-                            <?php if($msg){
+                        <p style="font-size:16px; color:red" align="center"> <?php if($msg){
     echo $msg;
   }  ?> </p>
-                        <form class="m-t-20" action="" method="post" name="submit">
+<form class="m-t-20" action="" method="post" name="changepassword" onsubmit="return checkpass();">
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="neumorphic neumorphic-input" type="email" required="" name="email" placeholder="DA Email">
+                                    <input class="form-control" type="password" required="" name="newpassword" placeholder="New Password">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="neumorphic neumorphic-input" type="text" name="contactno" required="" placeholder="DA Mobile Number">
+                                    <input class="form-control" type="password" name="confirmpassword" required="" placeholder="Confirm Your Password">
                                 </div>
                             </div>
 
 
                             <div class="form-group text-center row m-t-10">
                                 <div class="col-12">
-                                    <button class="neumorphic neumorphic-button" type="submit" name="submit">Reset</button>
+                                    <button class="btn btn-success btn-block waves-effect waves-light" type="submit" name="submit">Reset</button>
                                 </div>
                             </div>
-                            <br>
 
                             <div class="form-group row m-t-30 mb-0">
                                 <div class="col-12">
-                                    <a href="index.php" class="text-muted neumorphic-button"><i class="fa fa-lock m-r-5"></i> Sign In</a>
+                                    <a href="index.php" class="text-muted"><i class="fa fa-lock m-r-5"></i> Sign In</a>
                                 </div>
                             </div>
 
@@ -92,14 +108,20 @@ if(isset($_POST['submit']))
                     </div>
 
                     <div class="clearfix"></div>
-                <!-- </div> -->
+                </div>
             </div>
             <!-- end card-box-->
+
+            
+
         </div>
         <!-- end wrapper page -->
+
+
         <script>
             var resizefunc = [];
         </script>
+
         <!-- jQuery  -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.bundle.min.js"></script>

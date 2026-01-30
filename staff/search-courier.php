@@ -10,9 +10,9 @@ if (strlen($_SESSION['cmssid']==0)) {
 if($_GET['action']=='delete'){
 $cid=intval($_GET['cid']);
 
-$query=mysqli_query($con,"delete from tblcourier where  ID='$cid'");
+$query=mysqli_query($con,"delete from tblcourier where RefNumber='$cid'");
 if($query){
-$query=mysqli_query($con,"delete from tblcouriertracking where  CourierId='$cid'");    
+$query=mysqli_query($con,"delete from tblcouriertracking where  RefNumber='$cid'");    
 echo "<script>alert('Courier Record  deleted successfully.');</script>";
 echo "<script type='text/javascript'> document.location = 'search-courier.php'; </script>";
 } else {
@@ -136,8 +136,8 @@ if($status==''): ?>
 <?php endif;?>
 </td>
 <td><?php  echo $row['CourierDate'];?></td>
- <td><a href="view-courier.php?editid=<?php echo $row['ID'];?>" class="btn btn-primary" target="blank">View Details</a>
-<a href="search-courier.php?action=delete&&cid=<?php echo $row['ID']; ?>"  title="Delete this record" onclick="return confirm('Do you really want to delete this record?');" class="btn btn-danger">Delete </a>                      
+ <td><a href="view-courier.php?editid=<?php echo $row['RefNumber'];?>" class="btn btn-primary" target="blank">View Details</a>
+<a href="search-courier.php?action=delete&&cid=<?php echo $row['RefNumber']; ?>"  title="Delete this record" onclick="return confirm('Do you really want to delete this record?');" class="btn btn-danger">Delete </a>                      
 </td>
                 </tr>
                 <?php 
